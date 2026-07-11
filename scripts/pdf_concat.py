@@ -5,12 +5,18 @@ import sys
 
 range_pattern = r"^\d+(?:-\d+)?(?:,\d+(?:-\d+)?)*$"
 
-def append_pages(out, src_path, page_range):
+def append_pages(out, src_path: str, page_range: list):
+    """
+    Append pages from `src_path` with range `page_range` to the output file.
+    """
     src = pymupdf.open(src_path)
     for r in page_range:
         out.insert_pdf(src, from_page = r[0], to_page = r[1])
     
-def str_to_range(raw_str):
+def str_to_range(raw_str: str):
+    """
+    Convert source page range string to a list of tuples `(lindex, rindex)`.
+    """
     ranges = []
     ranges_str = raw_str.split(',')
     for s in ranges_str:
@@ -26,16 +32,28 @@ def str_to_range(raw_str):
             
 
 if __name__ == "__main__":
-    outpath = sys.argv[1]
     out = pymupdf.open()
-    index = 2
-    while index < len(sys.argv):
-        src_path = sys.argv[index]
+
+    # 1. get output path
+    if(len(sys.argv) >= 2):
+        outpath = sys.argv[1]
+    else:
+        outpath = input(">>> Output path: ")
+
+    # 2. get source list
+    if(len(sys.argv) >= 3):
+        source_list = sys.argv[2:]
+    else:
+        source_list = input(">>> PDF source: ").split()
+    index = 0
+
+    while index < len(source_list):
+        src_path = source_list[index]
         index += 1
         page_range = [(-1,-1)]
-        if index < len(sys.argv):
-            if re.match(range_pattern, sys.argv[index], flags=0):
-                page_range = str_to_range(sys.argv[index])
+        if index < len(source_list):
+            if re.match(range_pattern, source_list[index], flags=0):
+                page_range = str_to_range(source_list[index])
                 index += 1
         append_pages(out, src_path, page_range)
     out.save(outpath)
