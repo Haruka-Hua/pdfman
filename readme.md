@@ -54,3 +54,21 @@ If no (empty) `page_range` is give for a source file, then all of its pages will
 ```Shell
 python scripts/pdf_to_image.py test in.pdf 1,3,6-8,9,11-15
 ```
+
+## image_extract
+
+This script extracts images from a certain pdf file.
+
+To run this script, you can use the following command:
+
+```Shell
+python scripts/image_extract.py (out_dir)? (src_path)? (page_range)?
+```
+
+Where `out_dir` is the directory you want to put your images in, `src_path` is path to the source file, `page_range` is the pages whose image you want to extract, in a format like: `1,3-4,8-9,10`(index is 1-based).
+
+If no (empty) `page_range` is give for a source file, then all of its images will be converted. Here is an example:
+
+```Shell
+python scripts/image_extract.py test in.pdf 1,3,6-8,9,11-15
+```
