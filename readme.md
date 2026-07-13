@@ -72,3 +72,22 @@ If no (empty) `page_range` is give for a source file, then all of its images wil
 ```Shell
 python scripts/image_extract.py test in.pdf 1,3,6-8,9,11-15
 ```
+
+## file_to_pdf
+
+This script is used to convert images or other files into pdf.
+
+To know if a certain format is supported, please look up at [https://pymupdf.cn/en/latest/how-to-open-a-file.html]().
+
+Use the following command to run this script:
+
+```Shell
+python scripts/file_to_pdf.py (out_dir)? (src_path)?
+```
+
+For instance:
+
+```Shell
+python scripts/file_to_pdf.py test in.png
+python scripts/file_to_pdf.py test book.epub
+```
